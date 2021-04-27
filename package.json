@@ -1,5 +1,5 @@
 {
-  "name": "mongoose-soft-delete",
+  "name": "mongoose-softdelete-plugin",
   "version": "1.0.0",
   "description": "a mongoose plugin that allows you to soft delete documents and restore them (for JS & TS)",
   "main": "dist/index.js",
