@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^5.12.5"
+    "mongoose": "^5.12.5",
+    "readme-md-generator": "^1.0.0"
   }
 }
