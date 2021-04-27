@@ -1,0 +1,20 @@
+{
+  "name": "mongoose-soft-delete",
+  "version": "1.0.0",
+  "description": "a mongoose plugin that allows you to soft delete documents and restore them",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "clean": "del .\\dist\\*",
+    "build": "npm run clean && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.12.5"
+  }
+}
