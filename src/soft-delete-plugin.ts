@@ -28,8 +28,8 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     return this.find({ isDeleted: true });
   });
 
-  schema.static('restore', async function (id) {
-    const deletedTemplate = await this.findById(id);
+  schema.static('restore', async function (query) {
+    const deletedTemplate = await this.find(query);
     if (!deletedTemplate.isDeleted) {
       return deletedTemplate;
     }
@@ -39,8 +39,8 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     return await deletedTemplate.save();
   });
 
-  schema.static('softDelete', async function (id) {
-    const template = await this.findById(id);
+  schema.static('softDelete', async function (query) {
+    const template = await this.find(query);
     if (template.isDeleted) {
       return template;
     }
