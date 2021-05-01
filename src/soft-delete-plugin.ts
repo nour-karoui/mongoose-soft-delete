@@ -48,10 +48,9 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       deletedTemplate.$isDeleted(false);
       deletedTemplate.isDeleted = false;
       deletedTemplate.deletedAt = null;
-      await deletedTemplate.save();
-      restored ++;
+      await deletedTemplate.save().then(() => restored ++);
     }
-    return restored
+    return {restored};
   });
 
   schema.static('softDelete', async function (query) {
@@ -67,10 +66,9 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       template.$isDeleted(true);
       template.isDeleted = true;
       template.deletedAt = new Date();
-      await template.save();
-      deleted ++;
+      await template.save().then(() => deleted ++);
     }
-    return deleted;
+    return {deleted};
   });
 };
 
