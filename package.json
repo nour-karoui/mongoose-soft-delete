@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "del .\\dist\\*",
-    "build": "tsc",
+    "build": "npm run clean && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
