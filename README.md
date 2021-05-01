@@ -65,7 +65,7 @@ const availableElements = await Test.find();
 import * as mongoose from 'mongoose';
 import { softDeletePlugin, SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
-interface TestDocument extends mongoose.Document {
+interface Test extends mongoose.Document {
     name: string;
     lastName: string;
 }
@@ -77,7 +77,7 @@ const TestSchema = new mongoose.Schema({
 TemplateSchema.plugin(softDeletePlugin);
 // two different ways of implementing model depending on technology used
 // 1st way
-const testModel = mongoose.model<TestDocument, SoftDeleteModel>('Test', TestSchema);
+const testModel = mongoose.model<Test, SoftDeleteModel>('Test', TestSchema);
 
 //2nd way (nestjs way)
 constructor(@InjectModel('Test') private readonly testModel: SoftDeleteModel<Test>) {}

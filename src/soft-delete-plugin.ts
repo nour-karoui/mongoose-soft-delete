@@ -29,7 +29,17 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
   });
 
   schema.static('restore', async function (query) {
-    const deletedTemplate = await this.find(query);
+
+    // add {isDeleted: true} because the method find is set to filter the non deleted documents only,
+    // so if we don't add {isDeleted: true}, it won't be able to find it
+    const updatedQuery = {
+      ...query,
+      isDeleted: true
+    };
+    const deletedTemplate = await this.find(updatedQuery);
+    if (!deletedTemplate) {
+      return Error('element not found');
+    }
     if (!deletedTemplate.isDeleted) {
       return deletedTemplate;
     }
@@ -41,6 +51,9 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
 
   schema.static('softDelete', async function (query) {
     const template = await this.find(query);
+    if (!template) {
+      return Error('Element not found');
+    }
     if (template.isDeleted) {
       return template;
     }

@@ -12,6 +12,14 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "mongoose",
+    "soft delete mongoose",
+    "soft delete mongodb",
+    "mongoose typescript",
+    "mongoose",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
