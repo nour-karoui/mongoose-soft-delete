@@ -36,31 +36,41 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       ...query,
       isDeleted: true
     };
-    const deletedTemplate = await this.find(updatedQuery);
-    if (!deletedTemplate) {
+    const deletedTemplates = await this.find(updatedQuery);
+    if (!deletedTemplates) {
       return Error('element not found');
     }
-    if (!deletedTemplate.isDeleted) {
-      return deletedTemplate;
+    let restored = 0;
+    for (const deletedTemplate of deletedTemplates) {
+      if (!deletedTemplate.isDeleted) {
+        return deletedTemplate;
+      }
+      deletedTemplate.$isDeleted(false);
+      deletedTemplate.isDeleted = false;
+      deletedTemplate.deletedAt = null;
+      await deletedTemplate.save();
+      restored ++;
     }
-    deletedTemplate.$isDeleted(false);
-    deletedTemplate.isDeleted = false;
-    deletedTemplate.deletedAt = null;
-    return await deletedTemplate.save();
+    return restored
   });
 
   schema.static('softDelete', async function (query) {
-    const template = await this.find(query);
-    if (!template) {
+    const templates = await this.find(query);
+    if (!templates) {
       return Error('Element not found');
     }
-    if (template.isDeleted) {
-      return template;
+    let deleted = 0;
+    for (const template of templates) {
+      if (template.isDeleted) {
+        return template;
+      }
+      template.$isDeleted(true);
+      template.isDeleted = true;
+      template.deletedAt = new Date();
+      await template.save();
+      deleted ++;
     }
-    template.$isDeleted(true);
-    template.isDeleted = true;
-    template.deletedAt = new Date();
-    return await template.save();
+    return deleted;
   });
 };
 
