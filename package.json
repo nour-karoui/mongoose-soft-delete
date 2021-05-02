@@ -18,7 +18,9 @@
     "soft delete mongodb",
     "mongoose typescript",
     "mongoose",
-    "typescript"
+    "typescript",
+    "mongoose soft delete typescript",
+    "mongoose soft delete nestjs"
   ],
   "author": "",
   "license": "ISC",
