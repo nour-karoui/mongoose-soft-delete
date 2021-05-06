@@ -22,8 +22,16 @@
     "mongoose soft delete typescript",
     "mongoose soft delete nestjs"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Nour KAROUI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nour-karoui/mongoose-soft-delete"
+  },
+  "bugs": {
+    "url": "https://github.com/nour-karoui/mongoose-soft-delete/issues"
+  },
+  "homepage": "https://github.com/nour-karoui/mongoose-soft-delete",
+  "license": "MIT",
   "dependencies": {
     "mongoose": "^5.12.5",
     "readme-md-generator": "^1.0.0"
