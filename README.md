@@ -77,7 +77,7 @@ const TestSchema = new mongoose.Schema({
     name: String,
     lastName: String
 });
-TemplateSchema.plugin(softDeletePlugin);
+TestSchema.plugin(softDeletePlugin);
 // two different ways of implementing model depending on technology used
 // 1st way
 const testModel = mongoose.model<Test, SoftDeleteModel>('Test', TestSchema);
