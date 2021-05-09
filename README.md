@@ -80,7 +80,7 @@ const TestSchema = new mongoose.Schema({
 TestSchema.plugin(softDeletePlugin);
 // two different ways of implementing model depending on technology used
 // 1st way
-const testModel = mongoose.model<Test, SoftDeleteModel>('Test', TestSchema);
+const testModel = mongoose.model<Test, SoftDeleteModel<Test>>('Test', TestSchema);
 
 //2nd way (nestjs way)
 constructor(@InjectModel('Test') private readonly testModel: SoftDeleteModel<Test>) {}
