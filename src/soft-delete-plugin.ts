@@ -42,13 +42,12 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     }
     let restored = 0;
     for (const deletedTemplate of deletedTemplates) {
-      if (!deletedTemplate.isDeleted) {
-        return deletedTemplate;
+      if (deletedTemplate.isDeleted) {
+        deletedTemplate.$isDeleted(false);
+        deletedTemplate.isDeleted = false;
+        deletedTemplate.deletedAt = null;
+        await deletedTemplate.save().then(() => restored ++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message)});
       }
-      deletedTemplate.$isDeleted(false);
-      deletedTemplate.isDeleted = false;
-      deletedTemplate.deletedAt = null;
-      await deletedTemplate.save().then(() => restored ++);
     }
     return {restored};
   });
@@ -60,13 +59,12 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     }
     let deleted = 0;
     for (const template of templates) {
-      if (template.isDeleted) {
-        return template;
+      if (!template.isDeleted) {
+        template.$isDeleted(true);
+        template.isDeleted = true;
+        template.deletedAt = new Date();
+        await template.save().then(() => deleted++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message)});
       }
-      template.$isDeleted(true);
-      template.isDeleted = true;
-      template.deletedAt = new Date();
-      await template.save().then(() => deleted ++);
     }
     return {deleted};
   });

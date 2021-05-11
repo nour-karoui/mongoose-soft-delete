@@ -48,10 +48,16 @@ const Test =  mongoose.model("Test", TestSchema);
 
 const test = new Test({name: 'hello', lastName: "world"});
 
-/*** returns the number of softDeleted elements ***/
+/*** returns an object containing the number of softDeleted elements ***/
+/***
+    {deleted: number} 
+***/
 const deleted = await Test.softDelete({ _id: test._id, name: test.name });
 
-/*** returns the number of restores elements ***/
+/*** returns an object containing the number of restored elements ***/
+/***
+    {restored: number} 
+***/
 const restored = await Test.restore({ _id: test._id, name: test.name });
 
 /*** returns all deleted elements ***/
@@ -87,10 +93,16 @@ constructor(@InjectModel('Test') private readonly testModel: SoftDeleteModel<Tes
 
 const test = await new this.testModel({name: 'hello', lastName: 'world'});
 
-/*** returns the number of softDeleted elements ***/
+/*** returns an object containing the number of softDeleted elements ***/
+/***
+    {deleted: number} 
+***/
 const deleted = await this.testModel.softDelete({ _id: test._id, name: test.name });
 
-/*** returns the number of restored elements ***/
+/*** returns an object containing the number of restored elements ***/
+/***
+    {restored: number} 
+***/
 const restored = await this.testModel.restore({ _id: test._id, name: test.name });
 
 /*** returns all deleted elements ***/
