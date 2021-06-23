@@ -66,6 +66,9 @@ const deletedElements = await Test.findDeleted();
 /*** returns all available elements (not deleted) ***/
 const availableElements = await Test.find();
 
+/*** counts all available elements (not deleted) ***/
+const countAvailable = await Test.count();
+
 /*** findById returns the document whether deleted or not  ***/
 ```
 
@@ -110,6 +113,9 @@ const deletedElements = await this.testModel.findDeleted();
 
 /*** returns all available elements (not deleted) ***/
 const availableElements = await this.testModel.find();
+
+/*** counts all available elements (not deleted) ***/
+const countAvailable = await Test.count();
 
 /*** findById returns the document whether deleted or not  ***/
 ```
