@@ -35,5 +35,9 @@
   "dependencies": {
     "mongoose": "^5.12.5",
     "readme-md-generator": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.10.5",
+    "typescript": "^4.2.3"
   }
 }
