@@ -1,4 +1,4 @@
-import mongoose, { CallbackError } from 'mongoose';
+import mongoose, { CallbackError, SaveOptions } from 'mongoose';
 
 export const softDeletePlugin = (schema: mongoose.Schema) => {
   schema.add({
@@ -62,7 +62,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     return {restored};
   });
 
-  schema.static('softDelete', async function (query) {
+  schema.static('softDelete', async function (query, options?: SaveOptions) {
     const templates = await this.find(query);
     if (!templates) {
       return Error('Element not found');
@@ -73,7 +73,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
         template.$isDeleted(true);
         template.isDeleted = true;
         template.deletedAt = new Date();
-        await template.save().then(() => deleted++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message)});
+        await template.save(options).then(() => deleted++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message)});
       }
     }
     return {deleted};
