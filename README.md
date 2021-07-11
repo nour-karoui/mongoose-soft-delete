@@ -52,7 +52,14 @@ const test = new Test({name: 'hello', lastName: "world"});
 /***
     {deleted: number} 
 ***/
-const deleted = await Test.softDelete({ _id: test._id, name: test.name });
+/***
+    the argument options is optional
+***/
+const options = { validateBeforeSave: false };
+const deleted = await Test.softDelete({ _id: test._id, name: test.name }, options);
+/** 
+ const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
+**/
 
 /*** returns an object containing the number of restored elements ***/
 /***
@@ -100,7 +107,14 @@ const test = await new this.testModel({name: 'hello', lastName: 'world'});
 /***
     {deleted: number} 
 ***/
-const deleted = await this.testModel.softDelete({ _id: test._id, name: test.name });
+/***
+    the argument options is optional
+***/
+const options = { validateBeforeSave: false };
+const deleted = await Test.softDelete({ _id: test._id, name: test.name }, options);
+/** 
+ const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
+**/
 
 /*** returns an object containing the number of restored elements ***/
 /***
