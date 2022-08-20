@@ -26,13 +26,23 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
 
   // @ts-ignore
   schema.pre('count',
-      async function (this, next: (err?: CallbackError) => void) {
-        if (this.getFilter().isDeleted === true) {
-          return next();
-        }
-        this.setQuery({ ...this.getFilter(), isDeleted: false });
-        next();
-      },)
+    async function (this, next: (err?: CallbackError) => void) {
+      if (this.getFilter().isDeleted === true) {
+        return next();
+      }
+      this.setQuery({ ...this.getFilter(), isDeleted: false });
+      next();
+    })
+
+  // @ts-ignore
+  schema.pre('countDocuments',
+    async function (this, next: (err?: CallbackError) => void) {
+      if (this.getFilter().isDeleted === true) {
+        return next();
+      }
+      this.setQuery({ ...this.getFilter(), isDeleted: false });
+      next();
+    })
 
   schema.static('findDeleted', async function () {
     return this.find({ isDeleted: true });
@@ -56,10 +66,10 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
         deletedTemplate.$isDeleted(false);
         deletedTemplate.isDeleted = false;
         deletedTemplate.deletedAt = null;
-        await deletedTemplate.save().then(() => restored ++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message)});
+        await deletedTemplate.save().then(() => restored++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message) });
       }
     }
-    return {restored};
+    return { restored };
   });
 
   schema.static('softDelete', async function (query, options?: SaveOptions) {
@@ -73,10 +83,10 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
         template.$isDeleted(true);
         template.isDeleted = true;
         template.deletedAt = new Date();
-        await template.save(options).then(() => deleted++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message)});
+        await template.save(options).then(() => deleted++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message) });
       }
     }
-    return {deleted};
+    return { deleted };
   });
 };
 
