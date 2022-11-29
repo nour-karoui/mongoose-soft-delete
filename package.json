@@ -32,9 +32,8 @@
   },
   "homepage": "https://github.com/nour-karoui/mongoose-soft-delete",
   "license": "MIT",
-  "dependencies": {
-    "mongoose": "^5.12.5",
-    "readme-md-generator": "^1.0.0"
+  "peerDependencies": {
+    "mongoose": "^5.12.5"
   },
   "devDependencies": {
     "@types/mongoose": "^5.10.5",
