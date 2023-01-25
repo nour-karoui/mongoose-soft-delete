@@ -19,7 +19,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       if (this.getFilter().isDeleted === true) {
         return next();
       }
-      this.setQuery({ ...this.getFilter(), $or:[{ isDeleted: false }, { isDeleted: null }] });
+      this.setQuery({ ...this.getFilter(), $or: [{ isDeleted: false }, { isDeleted: null }] });
       next();
     },
   );
@@ -30,7 +30,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       if (this.getFilter().isDeleted === true) {
         return next();
       }
-      this.setQuery({ ...this.getFilter(), $or:[{ isDeleted: false }, { isDeleted: null }] });
+      this.setQuery({ ...this.getFilter(), $or: [{ isDeleted: false }, { isDeleted: null }] });
       next();
     })
 
@@ -40,7 +40,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       if (this.getFilter().isDeleted === true) {
         return next();
       }
-      this.setQuery({ ...this.getFilter(), $or:[{ isDeleted: false }, { isDeleted: null }] });
+      this.setQuery({ ...this.getFilter(), $or: [{ isDeleted: false }, { isDeleted: null }] });
       next();
     })
 
