@@ -1,6 +1,8 @@
-import mongoose, { CallbackError, SaveOptions } from 'mongoose';
+import mongoose, { CallbackError, FilterQuery } from 'mongoose';
+import { SoftDeleteModel } from './soft-delete-model';
 
-export const softDeletePlugin = (schema: mongoose.Schema) => {
+type Model = SoftDeleteModel<mongoose.Document>;
+export function softDeletePlugin<T extends mongoose.Schema>(schema: T) {
   schema.add({
     isDeleted: {
       type: Boolean,
@@ -9,13 +11,13 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     },
     deletedAt: {
       type: Date,
-      default: null,
+      default: () => new Date(),
     },
   });
 
   // @ts-ignore
   schema.pre('find',
-    async function (this, next: (err?: CallbackError) => void) {
+    async function(this, next: (err?: CallbackError) => void) {
       if (this.getFilter().isDeleted === true) {
         return next();
       }
@@ -26,7 +28,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
 
   // @ts-ignore
   schema.pre('count',
-    async function (this, next: (err?: CallbackError) => void) {
+    async function(this, next: (err?: CallbackError) => void) {
       if (this.getFilter().isDeleted === true) {
         return next();
       }
@@ -36,7 +38,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
 
   // @ts-ignore
   schema.pre('countDocuments',
-    async function (this, next: (err?: CallbackError) => void) {
+    async function(this, next: (err?: CallbackError) => void) {
       if (this.getFilter().isDeleted === true) {
         return next();
       }
@@ -44,49 +46,63 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       next();
     })
 
-  schema.static('findDeleted', async function () {
-    return this.find({ isDeleted: true });
+  schema.static('findDeleted', function() {
+    return this.find({ isDeleted: true }).exec();
   });
 
-  schema.static('restore', async function (query) {
-
-    // add {isDeleted: true} because the method find is set to filter the non deleted documents only,
-    // so if we don't add {isDeleted: true}, it won't be able to find it
-    const updatedQuery = {
+  schema.static('restore', async function(query: FilterQuery<T>, orFail?: (e: Error) => unknown) {
+    const findDeletedDocsQuery = {
+      isDeleted: true,
       ...query,
-      isDeleted: true
     };
-    const deletedTemplates = await this.find(updatedQuery);
-    if (!deletedTemplates) {
-      return Error('element not found');
-    }
-    let restored = 0;
-    for (const deletedTemplate of deletedTemplates) {
-      if (deletedTemplate.isDeleted) {
-        deletedTemplate.$isDeleted(false);
-        deletedTemplate.isDeleted = false;
-        deletedTemplate.deletedAt = null;
-        await deletedTemplate.save().then(() => restored++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message) });
+    const { modifiedCount } = await this.updateMany(findDeletedDocsQuery, {
+      $set: {
+        isDeleted: false,
+        deletedAt: null
       }
-    }
-    return { restored };
+    }).orFail(orFail).exec();
+
+
+    return { restored: modifiedCount };
   });
 
-  schema.static('softDelete', async function (query, options?: SaveOptions) {
-    const templates = await this.find(query);
-    if (!templates) {
-      return Error('Element not found');
-    }
-    let deleted = 0;
-    for (const template of templates) {
-      if (!template.isDeleted) {
-        template.$isDeleted(true);
-        template.isDeleted = true;
-        template.deletedAt = new Date();
-        await template.save(options).then(() => deleted++).catch((e: mongoose.Error) => { throw new Error(e.name + ' ' + e.message) });
+  schema.static('softDelete', async function(query, orFail?: (e: Error) => unknown) {
+    const queryFilter = {
+      $or: [
+        { isDeleted: false },
+        { isDeleted: { $exists: false } },
+        { isDeleted: null }
+      ],
+      ...query,
+    };
+
+    console.log(queryFilter)
+
+    const { modifiedCount } = await this.updateMany(queryFilter, {
+      $set: {
+        isDeleted: true,
+        deletedAt: new Date()
       }
-    }
-    return { deleted };
+    }).orFail(orFail).exec();
+
+    return {
+      deleted: modifiedCount
+    };
   });
+
+  schema.static('softDeleteById', async function(id: string | mongoose.Types.ObjectId, orFail?: (e: Error) => unknown) {
+    await (this as Model).softDelete(
+      { _id: new mongoose.Types.ObjectId(id) },
+      orFail
+    )
+  });
+
+  schema.static('restoreById', async function(id: string | mongoose.Types.ObjectId, orFail?: (e: Error) => unknown) {
+    await (this as Model).restore(
+      { _id: new mongoose.Types.ObjectId(id) },
+      orFail
+    )
+  });
+
 };
 
