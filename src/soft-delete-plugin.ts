@@ -76,8 +76,6 @@ export function softDeletePlugin<T extends mongoose.Schema>(schema: T) {
       ...query,
     };
 
-    console.log(queryFilter)
-
     const { modifiedCount } = await this.updateMany(queryFilter, {
       $set: {
         isDeleted: true,
