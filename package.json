@@ -1,6 +1,6 @@
 {
   "name": "soft-delete-plugin-mongoose",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "a mongoose plugin that allows you to soft delete documents and restore them (for JS & TS)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,7 @@
   "homepage": "https://github.com/nour-karoui/mongoose-soft-delete",
   "license": "MIT",
   "peerDependencies": {
-    "mongoose": "^5.12.5"
+    "mongoose": "^7.6.1"
   },
   "devDependencies": {
     "@types/jest": "^29.4.0",
