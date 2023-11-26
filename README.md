@@ -59,7 +59,7 @@ const options = { validateBeforeSave: false }; //optional
 const deletedBy = "A user" // optional
 const deleted = await TestModel.softDelete({ _id: test._id, name: test.name }, options, deletedBy);
 
-const deleted = await TestModel.softDeleteById(test._id, deletedBy);
+const deletedById = await TestModel.softDeleteById(test._id, deletedBy);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
  
@@ -123,7 +123,7 @@ const deletedBy = "A user" // optional
 
 const deleted = await this.testModel.softDelete({ _id: test._id, name: test.name }, options, deletedBy);
 
-const deleted = await this.TestModel.softDeleteById(test._id, deletedBy);
+const deletedById = await this.TestModel.softDeleteById(test._id, deletedBy);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
  
