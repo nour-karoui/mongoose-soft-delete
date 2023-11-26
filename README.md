@@ -81,7 +81,7 @@ const deletedElements = await TestModel.findDeleted();
 const availableElements = await TestModel.find();
 
 /*** returns all available elements (both deleted and not deleted) ***/
-const availableElements = await TestModel.findAll();
+const allAvailableElements = await TestModel.findAll();
 
 /*** counts all available elements (not deleted) ***/
 const countAvailable = await TestModel.count();
@@ -147,7 +147,7 @@ const deletedElements = await this.testModel.findDeleted();
 const availableElements = await this.testModel.find();
 
 /*** returns all available elements (both deleted and not deleted) ***/
-const availableElements = await this.testModel.findAll();
+const allAvailableElements = await this.testModel.findAll();
 
 /*** counts all available elements (not deleted) ***/
 const countAvailable = await this.test.count();
