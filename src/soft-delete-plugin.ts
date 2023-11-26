@@ -58,7 +58,7 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
   });
 
   schema.static("findAll", async function () {
-    return this.find();
+    return this.find({ $or: [{ isDeleted: true }, { isDeleted: false }] });
   });
 
   schema.static("restore", async function (query) {

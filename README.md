@@ -53,12 +53,17 @@ const test = new TestModel({name: 'hello', lastName: "world"});
     {deleted: number} 
 ***/
 /***
-    the argument options is optional
+    the argument options and deletedBy are optional
 ***/
-const options = { validateBeforeSave: false };
-const deleted = await TestModel.softDelete({ _id: test._id, name: test.name }, options);
+const options = { validateBeforeSave: false }; //optional
+const deletedBy = "A user" // optional
+const deleted = await TestModel.softDelete({ _id: test._id, name: test.name }, options, deletedBy);
+
+const deleted = await TestModel.softDeleteById(test._id, deletedBy);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
+ 
+ const deleted = await Test.softDeleteById(test._id); is also valid
 **/
 
 /*** returns an object containing the number of restored elements ***/
@@ -72,6 +77,9 @@ const deletedElements = await TestModel.findDeleted();
 
 /*** returns all available elements (not deleted) ***/
 const availableElements = await TestModel.find();
+
+/*** returns all available elements (both deleted and not deleted) ***/
+const availableElements = await TestModel.findAll();
 
 /*** counts all available elements (not deleted) ***/
 const countAvailable = await TestModel.count();
@@ -108,12 +116,18 @@ const test = await new this.testModel({name: 'hello', lastName: 'world'});
     {deleted: number} 
 ***/
 /***
-    the argument options is optional
+    the argument options and deletedBy are optional
 ***/
-const options = { validateBeforeSave: false };
-const deleted = await this.testModel.softDelete({ _id: test._id, name: test.name }, options);
+const options = { validateBeforeSave: false }; //optional
+const deletedBy = "A user" // optional
+
+const deleted = await this.testModel.softDelete({ _id: test._id, name: test.name }, options, deletedBy);
+
+const deleted = await this.TestModel.softDeleteById(test._id, deletedBy);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
+ 
+ const deleted = await Test.softDeleteById(test._id, deletedBy); is also valid
 **/
 
 /*** returns an object containing the number of restored elements ***/
@@ -127,6 +141,9 @@ const deletedElements = await this.testModel.findDeleted();
 
 /*** returns all available elements (not deleted) ***/
 const availableElements = await this.testModel.find();
+
+/*** returns all available elements (both deleted and not deleted) ***/
+const availableElements = await this.testModel.findAll();
 
 /*** counts all available elements (not deleted) ***/
 const countAvailable = await this.test.count();
