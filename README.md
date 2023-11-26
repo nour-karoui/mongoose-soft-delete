@@ -63,7 +63,7 @@ const deletedById = await TestModel.softDeleteById(test._id, deletedBy);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
  
- const deleted = await Test.softDeleteById(test._id); is also valid
+ const deletedById = await Test.softDeleteById(test._id); is also valid
 **/
 
 /*** returns an object containing the number of restored elements ***/
@@ -127,7 +127,7 @@ const deletedById = await this.TestModel.softDeleteById(test._id, deletedBy);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
  
- const deleted = await Test.softDeleteById(test._id, deletedBy); is also valid
+ const deletedById = await Test.softDeleteById(test._id, deletedBy); is also valid
 **/
 
 /*** returns an object containing the number of restored elements ***/
