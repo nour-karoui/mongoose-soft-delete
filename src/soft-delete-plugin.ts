@@ -36,6 +36,17 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
   );
 
   // @ts-ignore
+  schema.pre('findOneAndUpdate',
+    async function (this, next: (err?: CallbackError) => void) {
+      if (this.getFilter().isDeleted === true) {
+        return next();
+      }
+      this.setQuery({ ...this.getFilter(), isDeleted: { $ne: true } });
+      next();
+    },
+  );
+
+  // @ts-ignore
   schema.pre('count',
     async function (this, next: (err?: CallbackError) => void) {
       if (this.getFilter().isDeleted === true) {
