@@ -16,13 +16,11 @@
 
 > a mongoose plugin that allows you to soft delete documents and restore them in MongoDB (for JS & TS)
 
-* **Soft delete your MongoDB documents and restore them**
+- **Soft delete your MongoDB documents and restore them**
 
-* **JS and TS**
-
+- **JS and TS**
 
 ### 🏠 [Homepage](https://github.com/MahdadGhasemian/mongoose-soft-delete)
-
 
 ## Install
 
@@ -33,20 +31,21 @@ npm install @mahdad/soft-delete-plugin-mongoose
 ## How It Works
 
 **Javascript Version**
+
 ```js
-const mongoose = require('mongoose');
-const { softDeletePlugin } = require('@mahdad/soft-delete-plugin-mongoose');
+const mongoose = require("mongoose");
+const { softDeletePlugin } = require("@mahdad/soft-delete-plugin-mongoose");
 const Schema = mongoose.Schema;
 
 const TestSchema = new Schema({
-    name: String,
-    lastName: String
+  name: String,
+  lastName: String,
 });
 
 TestSchema.plugin(softDeletePlugin);
-const TestModel =  mongoose.model("Test", TestSchema);
+const TestModel = mongoose.model("Test", TestSchema);
 
-const test = new TestModel({name: 'hello', lastName: "world"});
+const test = new TestModel({ name: "hello", lastName: "world" });
 
 /*** returns an object containing the number of softDeleted elements ***/
 /***
@@ -56,7 +55,10 @@ const test = new TestModel({name: 'hello', lastName: "world"});
     the argument options is optional
 ***/
 const options = { validateBeforeSave: false };
-const deleted = await TestModel.softDelete({ _id: test._id, name: test.name }, options);
+const deleted = await TestModel.softDelete(
+  { _id: test._id, name: test.name },
+  options
+);
 /** 
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
 **/
@@ -73,6 +75,12 @@ const deletedElements = await TestModel.findDeleted();
 /*** returns all available elements (not deleted) ***/
 const availableElements = await TestModel.find();
 
+/*** returns one available element (not deleted) ***/
+const availableElements = await TestModel.findOne();
+
+/*** update if is not be deleted (not deleted) ***/
+const availableElements = await TestModel.findOneAndUpdate();
+
 /*** counts all available elements (not deleted) ***/
 const countAvailable = await TestModel.count();
 
@@ -80,6 +88,7 @@ const countAvailable = await TestModel.count();
 ```
 
 **Typescript Version**
+
 ```ts
 import * as mongoose from 'mongoose';
 import { softDeletePlugin, SoftDeleteModel } from '@mahdad/soft-delete-plugin-mongoose';
@@ -105,20 +114,20 @@ const test = await new this.testModel({name: 'hello', lastName: 'world'});
 
 /*** returns an object containing the number of softDeleted elements ***/
 /***
-    {deleted: number} 
+    {deleted: number}
 ***/
 /***
     the argument options is optional
 ***/
 const options = { validateBeforeSave: false };
 const deleted = await this.testModel.softDelete({ _id: test._id, name: test.name }, options);
-/** 
+/**
  const deleted = await Test.softDelete({ _id: test._id, name: test.name }); is also valid
 **/
 
 /*** returns an object containing the number of restored elements ***/
 /***
-    {restored: number} 
+    {restored: number}
 ***/
 const restored = await this.testModel.restore({ _id: test._id, name: test.name });
 
@@ -128,18 +137,24 @@ const deletedElements = await this.testModel.findDeleted();
 /*** returns all available elements (not deleted) ***/
 const availableElements = await this.testModel.find();
 
+/*** returns one available element (not deleted) ***/
+const availableElements = await this.testModel.findOne();
+
+/*** update if is not be deleted (not deleted) ***/
+const availableElements = await this.testModel.findOneAndUpdate();
+
 /*** counts all available elements (not deleted) ***/
-const countAvailable = await this.test.count();
+const countAvailable = await this.testModel.count();
 
 /*** findById returns the document whether deleted or not  ***/
 ```
 
 ## Author
 
-👤 **Nour**
+👤 **MahdadGhasemian**
 
-* Github: [@MahdadGhasemian](https://github.com/MahdadGhasemian)
-* LinkedIn: [@nourkaroui](https://www.linkedin.com/in/nourkaroui/)
+- Github: [@MahdadGhasemian](https://github.com/MahdadGhasemian)
+- LinkedIn: [@nourkaroui](https://www.linkedin.com/in/nourkaroui/)
 
 ## 🤝 Contributing
 
@@ -151,8 +166,9 @@ Give a [STAR](https://github.com/MahdadGhasemian/mongoose-soft-delete) if this p
 
 ## 📝 License
 
-* Copyright © 2021 [Nour](https://github.com/MahdadGhasemian).
-* This project is [MIT](https://github.com/MahdadGhasemian/mongoose-soft-delete/blob/master/LICENSE) licensed.
+- Copyright © 2021 [MahdadGhasemian](https://github.com/MahdadGhasemian).
+- This project is [MIT](https://github.com/MahdadGhasemian/mongoose-soft-delete/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
