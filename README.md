@@ -1,7 +1,7 @@
-<h1 align="center">Welcome to soft-delete-plugin-mongoose 👋</h1>
+<h1 align="center">Welcome to @mahdad/soft-delete-plugin-mongoose 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/soft-delete-plugin-mongoose" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/soft-delete-plugin-mongoose.svg">
+  <a href="https://www.npmjs.com/package/@mahdad/soft-delete-plugin-mongoose" target="_blank">
+    <img alt="Version" src="https://img.shields.io/npm/v/@mahdad/soft-delete-plugin-mongoose.svg">
   </a>
   <a href="https://github.com/nour-karoui/mongoose-soft-delete#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -27,7 +27,7 @@
 ## Install
 
 ```sh
-npm install soft-delete-plugin-mongoose
+npm install @mahdad/soft-delete-plugin-mongoose
 ```
 
 ## How It Works
@@ -35,7 +35,7 @@ npm install soft-delete-plugin-mongoose
 **Javascript Version**
 ```js
 const mongoose = require('mongoose');
-const { softDeletePlugin } = require('soft-delete-plugin-mongoose');
+const { softDeletePlugin } = require('@mahdad/soft-delete-plugin-mongoose');
 const Schema = mongoose.Schema;
 
 const TestSchema = new Schema({
@@ -82,7 +82,7 @@ const countAvailable = await TestModel.count();
 **Typescript Version**
 ```ts
 import * as mongoose from 'mongoose';
-import { softDeletePlugin, SoftDeleteModel } from 'soft-delete-plugin-mongoose';
+import { softDeletePlugin, SoftDeleteModel } from '@mahdad/soft-delete-plugin-mongoose';
 
 interface Test extends mongoose.Document {
     name: string;
