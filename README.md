@@ -3,13 +3,13 @@
   <a href="https://www.npmjs.com/package/@mahdad/soft-delete-plugin-mongoose" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/@mahdad/soft-delete-plugin-mongoose.svg">
   </a>
-  <a href="https://github.com/nour-karoui/mongoose-soft-delete#readme" target="_blank">
+  <a href="https://github.com/MahdadGhasemian/mongoose-soft-delete#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-  <a href="https://github.com/nour-karoui/mongoose-soft-delete/graphs/commit-activity" target="_blank">
+  <a href="https://github.com/MahdadGhasemian/mongoose-soft-delete/graphs/commit-activity" target="_blank">
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
-  <a href="https://github.com/nour-karoui/mongoose-soft-delete/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/MahdadGhasemian/mongoose-soft-delete/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/github/license/bishkou/password-pwnd" />
   </a>
 </p>
@@ -21,7 +21,7 @@
 * **JS and TS**
 
 
-### 🏠 [Homepage](https://github.com/nour-karoui/mongoose-soft-delete)
+### 🏠 [Homepage](https://github.com/MahdadGhasemian/mongoose-soft-delete)
 
 
 ## Install
@@ -138,21 +138,21 @@ const countAvailable = await this.test.count();
 
 👤 **Nour**
 
-* Github: [@nour-karoui](https://github.com/nour-karoui)
+* Github: [@MahdadGhasemian](https://github.com/MahdadGhasemian)
 * LinkedIn: [@nourkaroui](https://www.linkedin.com/in/nourkaroui/)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/nour-karoui/mongoose-soft-delete/issues). You can also take a look at the [contributing guide](https://github.com/nour-karoui/mongoose-soft-delete/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/MahdadGhasemian/mongoose-soft-delete/issues). You can also take a look at the [contributing guide](https://github.com/MahdadGhasemian/mongoose-soft-delete/blob/master/CONTRIBUTING.md).
 
 ## Show your support
 
-Give a [STAR](https://github.com/nour-karoui/mongoose-soft-delete) if this project helped you!
+Give a [STAR](https://github.com/MahdadGhasemian/mongoose-soft-delete) if this project helped you!
 
 ## 📝 License
 
-* Copyright © 2021 [Nour](https://github.com/nour-karoui).
-* This project is [MIT](https://github.com/nour-karoui/mongoose-soft-delete/blob/master/LICENSE) licensed.
+* Copyright © 2021 [Nour](https://github.com/MahdadGhasemian).
+* This project is [MIT](https://github.com/MahdadGhasemian/mongoose-soft-delete/blob/master/LICENSE) licensed.
 
 ***
 _This README was generated with by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
