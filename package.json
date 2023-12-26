@@ -8,7 +8,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "clean": "del .\\dist\\*",
+    "clean": "rm -rf ./dist",
     "build": "npm run clean && tsc",
     "test": "jest"
   },
