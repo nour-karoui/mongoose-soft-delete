@@ -15,7 +15,7 @@ const userModel = mongoose.model<User, SoftDeleteModel<User>>(
 
 describe("soft delete plugin", () => {
   beforeAll(async () => {
-    const url = "mongodb://0.0.0.0:27017/test";
+    const url = "'mongodb://0.0.0.0:27017/test'";
     await mongoose.connect(url);
   });
 
