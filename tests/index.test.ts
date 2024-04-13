@@ -12,7 +12,7 @@ const userModel = mongoose.model<User, SoftDeleteModel<User>>('User', UserSchema
 
 describe('soft delete plugin', () => {
   beforeAll(async () => {
-    await mongoose.connect('mongodb://0.0.0.0:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect('mongodb://0.0.0.0:27017/test');
   })
 
   afterAll(async () => {
@@ -79,6 +79,20 @@ describe('soft delete plugin', () => {
     // get soft deleted user
     const deletedUsers = await userModel.findDeleted();
     expect(deletedUsers.length).toBe(1);
+  });
+
+  test('updateMany should be successed', async () => {
+    // create one user
+    const user = await new userModel({ name: 'peter' }).save();
+    expect(user.name).toBe('peter');
+
+    // update many
+    const updateResp = await userModel.updateMany({ name: 'peter' }, { $set: { name: 'james' } });
+    expect(updateResp.modifiedCount).toBe(1);
+
+    // get updated user
+    const updatedUser = await userModel.find({ name: 'james' });
+    expect(updatedUser.length).toBe(1);
   });
 });
 
