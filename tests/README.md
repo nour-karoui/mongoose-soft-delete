@@ -5,7 +5,7 @@
 1. Using Docker to start a MongoDB container locally with 27017 port and `test` database.
 
 ```
-docker run --name mongoose-soft-delete-test -e MONGO_INITDB_DATABASE=test -d -p 27017:27017 mongo:6.0.3
+docker run --name mongoose-soft-delete-test -e MONGO_INITDB_DATABASE=test -d -p 27017:27017 mongo:7
 ```
 
 2. Run jest!
