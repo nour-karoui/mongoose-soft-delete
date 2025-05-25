@@ -39,6 +39,23 @@ describe('soft delete plugin', () => {
     // get this user after we performed soft delete
     const userAfterDelete = await userModel.find({ _id: user._id });
     expect(userAfterDelete?.length).toBe(0);
+    
+    const usersCount = await userModel.countDocuments();
+    expect(usersCount).toBe(0);
+
+    //soft deleted documents should not be updated by updateOne
+    const updatedUser = await userModel.updateOne({ _id: user._id }, { $set: { name: 'james' } });
+    expect(updatedUser.modifiedCount).toBe(0);
+
+    //soft deleted documents should not be updated by updateMany
+    const updatedUsers = await userModel.updateMany({ _id: user._id }, { $set: { name: 'james2' } });
+    expect(updatedUsers.modifiedCount).toBe(0);
+
+    const allUserIds = await userModel.distinct('_id');
+    expect(allUserIds.length).toBe(0);
+
+    const allUserIdsWithDeleted = await userModel.distinct('_id', { isDeleted: true });
+    expect(allUserIdsWithDeleted.length).toBe(1);
   });
 
   test('restore should be successed', async () => {
