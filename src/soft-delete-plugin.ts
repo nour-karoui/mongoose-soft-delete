@@ -1,4 +1,5 @@
 import mongoose, { CallbackError, MongooseQueryMiddleware, SaveOptions } from 'mongoose';
+import { overwriteAggregatePipeline } from './utils';
 
 const QUERY_HOOK_METHODS: MongooseQueryMiddleware[] = [
   'find',
@@ -34,6 +35,12 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
       next();
     },
   );
+
+  schema.pre('aggregate', function (next) {
+    if (this.options.skipHook) return next();
+    overwriteAggregatePipeline(this.pipeline());
+    next();
+  });
 
   schema.static('findDeleted', async function () {
     return this.find({ isDeleted: true });
