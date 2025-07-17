@@ -190,4 +190,3 @@ Give a [STAR](https://github.com/nour-karoui/mongoose-soft-delete) if this proje
 
 ***
 _This README was generated with by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
-
