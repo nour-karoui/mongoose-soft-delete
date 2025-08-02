@@ -65,7 +65,8 @@ describe('Aggregation Pipeline Soft Delete Tests', () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    await User.deleteMany();
+    await mongoose.disconnect();
   });
 
   describe('$lookup with soft deleted documents', () => {
