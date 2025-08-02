@@ -132,7 +132,41 @@ const availableElements = await this.testModel.find();
 const countAvailable = await this.test.count();
 
 /*** findById returns the document whether deleted or not  ***/
+
+/*** NEW in v2.0.0: Aggregation pipeline operations now automatically filter out soft-deleted documents ***/
+const aggregationResults = await this.testModel.aggregate([
+    { $match: { name: 'hello' } }, // Soft-deleted documents are automatically excluded
+    { $lookup: { from: 'other', localField: '_id', foreignField: 'testId', as: 'related' } } // Lookup also respects soft-delete
+]);
+
+/*** NEW in v2.0.0: distinct() method now supports soft-delete filtering ***/
+const distinctNames = await this.testModel.distinct('name'); // Returns only non-deleted documents
+
+/*** NEW in v2.0.0: findOneAndUpdate() method now supports soft-delete filtering ***/
+const updated = await this.testModel.findOneAndUpdate(
+    { name: 'hello' }, 
+    { lastName: 'updated' }, 
+    { new: true }
+); // Will only find and update non-deleted documents
 ```
+
+## What's New
+
+### Version 2.0.0 🎉
+
+**⚠️ Breaking Changes:**
+- Enhanced aggregation pipeline support with automatic soft-delete filtering
+- Improved query hooks for better performance and consistency
+
+**New Features:**
+- **Aggregation Pipeline Support**: `$match` and `$lookup` stages now automatically exclude soft-deleted documents
+- **Enhanced Method Support**: Added soft-delete aware hooks for:
+  - `distinct()` - Returns only non-deleted documents
+  - `findOneAndUpdate()` - Only operates on non-deleted documents
+- **Improved Query Performance**: Optimized query hooks for better database performance
+
+**Migration Guide:**
+If you were previously working around soft-delete filtering in aggregation pipelines, you can now remove those manual filters as they're handled automatically.
 
 ## Author
 
