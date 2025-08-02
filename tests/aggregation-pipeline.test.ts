@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { PipelineStage } from 'mongoose';
 import { User, Post, Comment, IUser, IPost, IComment } from './models';
+import { overwriteAggregatePipeline } from '../src/utils';
 
 describe('Aggregation Pipeline Soft Delete Tests', () => {
   let testUser1: IUser;
@@ -320,6 +321,27 @@ describe('Aggregation Pipeline Soft Delete Tests', () => {
       expect(commentsByPost).toHaveLength(1);
       expect(commentsByPost[0].postTitle).toBe('Second Post');
       expect(commentsByPost[0].commentCount).toBe(1);
+    });
+  });
+
+  describe('utils', () => {
+    it('should overwrite match stage with isDeleted query', () => {
+      const pipeline: PipelineStage[] = [
+        {
+          $match: {
+            user: '123',
+          }
+        }
+      ]
+      const result = overwriteAggregatePipeline(pipeline);
+      expect(result).toEqual([
+        {
+          $match: {
+            user: '123',
+            isDeleted: false,
+          }
+        }
+      ]);
     });
   });
 }); 
