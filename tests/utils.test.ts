@@ -26,7 +26,6 @@ const commentSchema = new mongoose.Schema({
   }
 });
 commentSchema.plugin(softDeletePlugin);
-const commentModel = mongoose.model<Comment, SoftDeleteModel<Comment>>('Comment', commentSchema);
 
 describe('utils', () => {
   beforeAll(async () => {
@@ -51,9 +50,6 @@ describe('utils', () => {
     ]);
   });
 
-  it('should overwrite lookup stage with isDeleted query', () => {
-    const pipeline: PipelineStage[] = [];
-  });
   afterAll(async () => {
     await mongoose.disconnect();
   })
