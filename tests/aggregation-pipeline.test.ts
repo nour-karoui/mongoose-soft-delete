@@ -65,7 +65,6 @@ describe('Aggregation Pipeline Soft Delete Tests', () => {
   });
 
   afterAll(async () => {
-    await User.deleteMany();
     await mongoose.disconnect();
   });
 
