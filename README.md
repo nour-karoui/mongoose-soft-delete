@@ -30,6 +30,8 @@
 npm install soft-delete-plugin-mongoose
 ```
 
+This plugin supports mongoose 7, 8 and 9. Mongoose 9 requires Node.js 20.19.0 or later.
+
 ## How It Works
 
 **Javascript Version**
@@ -74,7 +76,7 @@ const deletedElements = await TestModel.findDeleted();
 const availableElements = await TestModel.find();
 
 /*** counts all available elements (not deleted) ***/
-const countAvailable = await TestModel.count();
+const countAvailable = await TestModel.countDocuments();
 
 /*** findById returns the document whether deleted or not  ***/
 ```
@@ -129,7 +131,7 @@ const deletedElements = await this.testModel.findDeleted();
 const availableElements = await this.testModel.find();
 
 /*** counts all available elements (not deleted) ***/
-const countAvailable = await this.test.count();
+const countAvailable = await this.testModel.countDocuments();
 
 /*** findById returns the document whether deleted or not  ***/
 

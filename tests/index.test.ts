@@ -52,6 +52,19 @@ describe('soft delete plugin', () => {
     expect(allUserIdsWithDeleted.length).toBe(1);
   });
 
+  // Mongoose 8 removed Model.count(). Run this test only on mongoose 7.
+  const hasCount = typeof (User as any).count === 'function';
+  (hasCount ? test : test.skip)('count should exclude soft deleted documents', async () => {
+    await User.create([
+      { name: 'peter', age: 20, email: 'peter@gmail.com' },
+      { name: 'mark', age: 25, email: 'mark@gmail.com' },
+    ]);
+    await User.softDelete({ email: 'peter@gmail.com' });
+
+    const usersCount = await (User as any).count();
+    expect(usersCount).toBe(1);
+  });
+
   test('restore should be successed', async () => {
     // create one user
     const user = await new User({ name: 'peter', age: 20, email: 'peter@gmail.com' }).save();

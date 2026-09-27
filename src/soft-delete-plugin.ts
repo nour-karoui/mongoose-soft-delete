@@ -1,16 +1,20 @@
-import mongoose, { CallbackError, MongooseQueryMiddleware, SaveOptions } from 'mongoose';
+import mongoose, { MongooseQueryMiddleware, SaveOptions } from 'mongoose';
 import { overwriteAggregatePipeline } from './utils';
 
 const QUERY_HOOK_METHODS: MongooseQueryMiddleware[] = [
   'find',
   'findOne',
-  'count',
   'countDocuments',
   'updateMany',
   'updateOne',
   'findOneAndUpdate',
   'distinct',
 ];
+
+// Mongoose 8 removed Query.prototype.count. Keep the hook for mongoose 7.
+if (typeof (mongoose.Query.prototype as any).count === 'function') {
+  QUERY_HOOK_METHODS.push('count' as MongooseQueryMiddleware);
+}
 
 export const softDeletePlugin = (schema: mongoose.Schema) => {
   schema.add({
@@ -25,21 +29,17 @@ export const softDeletePlugin = (schema: mongoose.Schema) => {
     },
   });
 
-  // @ts-ignore
-  schema.pre(QUERY_HOOK_METHODS,
-    async function (this, next: (err?: CallbackError) => void) {
-      if (this.getFilter().isDeleted === true) {
-        return next();
-      }
-      this.setQuery({ ...this.getFilter(), isDeleted: { $ne: true } });
-      next();
-    },
-  );
+  // Mongoose 9 does not give a next() callback to pre middleware.
+  schema.pre(QUERY_HOOK_METHODS, function () {
+    if (this.getFilter().isDeleted === true) {
+      return;
+    }
+    this.setQuery({ ...this.getFilter(), isDeleted: { $ne: true } });
+  });
 
-  schema.pre('aggregate', function (next) {
-    if (this.options.skipHook) return next();
+  schema.pre('aggregate', function () {
+    if (this.options.skipHook) return;
     overwriteAggregatePipeline(this.pipeline());
-    next();
   });
 
   schema.static('findDeleted', async function () {
