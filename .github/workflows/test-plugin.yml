@@ -10,6 +10,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        mongoose: ['7', '8', '9']
+
     services:
       mongo:
         image: mongo:7
@@ -32,6 +37,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install mongoose ${{ matrix.mongoose }}
+        run: npm install --no-save mongoose@${{ matrix.mongoose }}
+
+      - name: Type-check
+        run: npx tsc --noEmit
 
       - name: Run tests
         env:
